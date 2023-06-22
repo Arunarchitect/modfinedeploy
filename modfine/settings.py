@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'fontawesomefree',
     'crispy_forms',
     'crispy_bootstrap5',
+    'captcha',
 ]
 
 AUTH_USER_MODEL = 'users.CustomUser'
@@ -153,4 +154,12 @@ TINYMCE_DEFAULT_CONFIG = {
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
-LOGIN_REDIRECT_URL = ''
+LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = 'login'
+
+AUTHENTICATION_BACKENDS = ['users.backends.EmailBackend']
+
+RECAPTCHA_PUBLIC_KEY = '6LfA_bsmAAAAAKxy_nK87Np4g2xFetl3wWb_niUP'
+RECAPTCHA_PRIVATE_KEY = '6LfA_bsmAAAAAMl0WbOjrCH5fl6A_7QFZhe77LFY'
+
+SILENCED_SYSTEM_CHECKS = ['captcha.recaptcha_test_key_error']
