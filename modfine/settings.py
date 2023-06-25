@@ -167,3 +167,16 @@ RECAPTCHA_PUBLIC_KEY = '6LfA_bsmAAAAAKxy_nK87Np4g2xFetl3wWb_niUP'
 RECAPTCHA_PRIVATE_KEY = '6LfA_bsmAAAAAMl0WbOjrCH5fl6A_7QFZhe77LFY'
 
 SILENCED_SYSTEM_CHECKS = ['captcha.recaptcha_test_key_error']
+
+
+
+# Emailing settings
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_FROM = 'modelflick@gmail.com'
+EMAIL_HOST_USER = 'modelflick@gmail.com'
+EMAIL_HOST_PASSWORD = 'czackybaudaruaki'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+PASSWORD_RESET_TIMEOUT = 14400
