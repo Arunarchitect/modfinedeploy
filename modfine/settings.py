@@ -135,6 +135,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 MEDIA_URL = '/media/'
 
+DATA_UPLOAD_MAX_MEMORY_SIZE = 5242880 #5MB
+
 TINYMCE_DEFAULT_CONFIG = {
     'custom_undo_redo_levels': 100,
     'selector': 'textarea',
@@ -153,6 +155,8 @@ TINYMCE_DEFAULT_CONFIG = {
     'width': 'auto',
     "height": "600px",
     'image_caption': True,
+    "images_upload_url": "upload_image",
+    
 }
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
