@@ -5,6 +5,11 @@ from . decorators import user_is_superuser
 from . forms import SeriesCreateForm, ArticleUpdateForm, ArticleCreateForm, SeriesUpdateForm
 from django.views.decorators.csrf   import csrf_exempt
 # Create your views here.
+from users.models import SubscribedUsers
+from .forms import NewsletterForm
+
+from django.contrib import messages
+from django.core.mail import EmailMessage
 
 import os
 from django.conf import settings
@@ -195,3 +200,33 @@ def upload_image(request, series, article):
             "Message": "Image uploaded Successfully",
             "location": os.path.join(settings.MEDIA_URL, 'ArticleSeries', matching_article.slug, file_obj.name)
         })
+    
+
+
+@user_is_superuser
+def newsletter(request):
+    if request.method == 'POST':
+        form = NewsletterForm(request.POST)
+        if form.is_valid():
+            subject = form.cleaned_data.get('subject')
+            receivers = form.cleaned_data.get('receivers').split(',')
+            email_message = form.cleaned_data.get('message')
+
+            mail = EmailMessage(subject, email_message, f"Team Modelflick <{request.user.email}>", bcc=receivers)
+            mail.content_subtype = 'html'
+
+            if mail.send():
+                messages.success(request, "Email sent succesfully")
+            else:
+                messages.error(request, "There was an error sending email")
+
+        else:
+            for error in list(form.errors.values()):
+                messages.error(request, error)
+
+        return redirect('/')
+
+    form = NewsletterForm()
+    form.fields['receivers'].initial = ','.join([active.email for active in SubscribedUsers.objects.all()])
+    return render(request=request, template_name='main/newsletter.html', context={'form': form})
+
