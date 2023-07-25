@@ -17,6 +17,10 @@ from .tokens import account_activation_token
 from .models import SubscribedUsers
 
 # Create your views here.
+def signup_redirect(request):
+    messages.error(request, "Something wrong here, it may be that you already have account!")
+    return redirect("home")
+
 
 def activate(request, uidb64, token):
     User = get_user_model()
